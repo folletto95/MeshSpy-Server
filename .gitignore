@@ -1,2 +1,2 @@
-./admin/target
-./local/target
+./admin/target/*
+./local/target/*
