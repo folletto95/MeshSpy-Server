@@ -11,25 +11,17 @@
 	<groupId>io.meshspy</groupId>
 	<artifactId>meshspy-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
 	<name>MeshSpy-Server</name>
 	<description>Backend software for the MeshSpy project</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
-	<properties>
-		<java.version>24</java.version>
-	</properties>
-	<dependencies>
+  <properties>
+    <java.version>24</java.version>
+  </properties>
+  <modules>
+    <module>admin</module>
+    <module>local</module>
+  </modules>
+  <dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
@@ -41,14 +33,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 
 </project>
