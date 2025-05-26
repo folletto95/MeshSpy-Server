@@ -1,4 +1,4 @@
-module github.com/folletto95/MeshSpy
+import "meshspy.local/internal/api"
 
 go 1.21
 
