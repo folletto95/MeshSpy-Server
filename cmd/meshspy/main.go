@@ -2,10 +2,10 @@ package main
 
 import (
     "log"
-    "meshspy/internal/serialconn"
-    "meshspy/internal/mqttclient"
-    "meshspy/internal/api"
-    "meshspy/internal/updater"
+    "/internal/serialconn"
+    "/internal/mqttclient"
+    "/internal/api"
+    "/internal/updater"
 )
 
 func main() {
