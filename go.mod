@@ -1,4 +1,4 @@
-module meshspy
+module github.com/folletto95/MeshSpy
 
 go 1.21
 
