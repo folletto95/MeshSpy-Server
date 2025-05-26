@@ -1,0 +1,28 @@
+package serialconn
+
+import (
+    "github.com/tarm/serial"
+    "log"
+)
+
+func StartSerialReader(port string, baud int) {
+    config := &serial.Config{Name: port, Baud: baud}
+    s, err := serial.OpenPort(config)
+    if err != nil {
+        log.Fatal("Serial port error:", err)
+    }
+    buf := make([]byte, 4096)
+    for {
+        n, err := s.Read(buf)
+        if err != nil {
+            log.Println("Read error:", err)
+            continue
+        }
+        go handleMessage(buf[:n])
+    }
+}
+
+func handleMessage(data []byte) {
+    log.Printf("Raw serial data: %x\n", data)
+    // TODO: Decodifica protobuf (FromRadio)
+}
