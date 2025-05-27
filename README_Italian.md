@@ -23,7 +23,7 @@ MeshSpy è un progetto in fase di sviluppo con l'obiettivo di realizzare un sist
 Clona il repository e accedi alla cartella del progetto:
 
 ```bash
-git clone https://github.com/tuo-username/MeshSpy.git
+git clone https://github.com/folletto95/MeshSpy.git
 cd MeshSpy
 ```
 
