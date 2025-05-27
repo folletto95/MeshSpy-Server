@@ -23,7 +23,7 @@ MeshSpy is a project currently under development aimed at creating an advanced s
 Clone the repository and navigate to the project directory:
 
 ```bash
-git clone https://github.com/your-username/MeshSpy.git
+git clone https://github.com/folletto95/MeshSpy.git
 cd MeshSpy
 ```
 
