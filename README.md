@@ -1,0 +1,83 @@
+# MeshSpy
+
+## Description
+
+MeshSpy is a project currently under development aimed at creating an advanced system for managing, monitoring, and interacting with Meshtastic node-based networks. The software will be entirely implemented in Go (latest available version), focusing on high performance, reliability, ease of maintenance, and simplicity of deployment, with native support for USB, Wi-Fi, and Bluetooth connections.
+
+## Goals and Planned Features
+
+* **Centralized Management:** Administration and remote monitoring of Meshtastic nodes (similar to Ubiquiti UniFi style).
+* **Modern Graphical Interface:** Intuitive web UI based on React? with fast REST APIs built in Go.
+* **MQTT Integration:** Real-time communication between nodes and backend through MQTT broker.
+* **Multi-connectivity:** Support for USB, Bluetooth, and Wi-Fi connections for nodes.
+* **Complete Automation:** Automated installation and simplified configuration.
+
+## Prerequisites
+
+* **Go** (latest available version)
+* **Node.js and npm** (for the React interface)?
+* **MQTT Broker** (e.g., Mosquitto, optional if using the integrated broker)
+
+## Quick Development Guide
+
+Clone the repository and navigate to the project directory:
+
+```bash
+git clone https://github.com/your-username/MeshSpy.git
+cd MeshSpy
+```
+
+### Backend (Go)
+
+1. Build the backend with Go:
+
+```bash
+make build
+```
+
+2. Start the backend (under development):
+
+```bash
+./meshspy
+```
+
+The backend will be available by default at `http://localhost:8000` (currently under development).
+
+### Frontend (React)
+
+1. Install dependencies and launch the web interface (under development):
+
+```bash
+cd meshspy-ui
+npm install
+npm run dev
+```
+
+The UI will be accessible at `http://localhost:5173` (currently under development).
+
+## Planned MQTT Configuration
+
+The MQTT broker configuration is planned through a `config.json` file:
+
+```json
+{
+  "mqtt_broker": "mqtt://localhost:1883",
+  "mqtt_topic": "msh/#"
+}
+```
+
+## Docker (Optional Planned Feature)
+
+The option to launch MeshSpy with Docker is planned:
+
+```bash
+docker-compose up -d
+```
+
+## Contributing
+
+If you would like to contribute to the project, please feel free to open issues, propose changes, or improvements through pull requests.
+
+## License
+
+MeshSpy is distributed under the GPL-3 license. See the [LICENSE](LICENSE) file for more details.
