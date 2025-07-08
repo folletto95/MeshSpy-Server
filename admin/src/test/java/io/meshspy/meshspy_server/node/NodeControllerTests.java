@@ -33,4 +33,10 @@ class NodeControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Test"));
     }
-}
+
+    @Test
+    void uiAvailable() throws Exception {
+        mockMvc.perform(get("/"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML));
+    }
