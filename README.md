@@ -58,13 +58,16 @@ The UI will be accessible at `http://localhost:5173` (currently under developmen
 ### Admin Module
 
 A minimal Spring Boot admin interface is available under the `admin` module.
-You can run it with Docker Compose:
+First build the application, then start the admin service with Docker Compose:
 
 ```bash
+docker compose up devel   # builds the JARs
 docker compose up debug-admin
 ```
 
 Once started, open `http://localhost:8080` to access a simple page showing the list of nodes and an interactive map.
+Ensure your devices send their HTTP requests to the same address (replace `localhost` with your server IP if needed).
+The admin service now persists nodes and pending requests under the `data/` directory (or a custom path via `-Dadmin.data.dir=...`).
 
 ## Planned MQTT Configuration
 
