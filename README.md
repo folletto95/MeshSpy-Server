@@ -55,6 +55,17 @@ npm run dev
 
 The UI will be accessible at `http://localhost:5173` (currently under development).
 
+### Admin Module
+
+A minimal Spring Boot admin interface is available under the `admin` module.
+You can run it with Docker Compose:
+
+```bash
+docker compose up debug-admin
+```
+
+Once started, open `http://localhost:8080` to access a simple page showing the list of nodes and an interactive map.
+
 ## Planned MQTT Configuration
 
 The MQTT broker configuration is planned through a `config.json` file:

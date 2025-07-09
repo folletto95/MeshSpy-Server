@@ -22,7 +22,7 @@ class NodeControllerTests {
 
     @Test
     void addAndGetNode() throws Exception {
-        Node node = new Node("1", "Test", "localhost");
+        Node node = new Node("1", "Test", "localhost", 0.0, 0.0);
 
         mockMvc.perform(post("/nodes")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -38,5 +38,5 @@ class NodeControllerTests {
     void uiAvailable() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML));
-    }
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML));    }
+}
