@@ -6,7 +6,8 @@ body {
 }
 
 .navbar {
-    background-color: #3949ab;
+    /* Updated background to green for better visibility */
+    background-color: #28a745;
     padding: 10px;
 }
 
