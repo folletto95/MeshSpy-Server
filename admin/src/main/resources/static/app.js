@@ -19,23 +19,32 @@ async function loadNodes() {
     });
 }
 
-document.getElementById('node-form').addEventListener('submit', async e => {
-    e.preventDefault();
-    const node = {
-        id: document.getElementById('node-id').value,
-        name: document.getElementById('node-name').value,
-        address: document.getElementById('node-address').value,
-        latitude: parseFloat(document.getElementById('node-lat').value),
-        longitude: parseFloat(document.getElementById('node-lon').value)
-    };
-    await fetch('/nodes', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(node)
+async function loadRequests() {
+    const response = await fetch('/node-requests');
+    const requests = await response.json();
+    const tbody = document.querySelector('#requests tbody');
+    tbody.innerHTML = '';
+    requests.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${r.id}</td><td>${r.name}</td><td>${r.address}</td><td><button data-id="${r.id}" class="approve">Approve</button> <button data-id="${r.id}" class="reject">Reject</button></td>`;
+        tbody.appendChild(tr);
     });
-    e.target.reset();
+    document.querySelectorAll('.approve').forEach(btn => btn.addEventListener('click', approve));
+    document.querySelectorAll('.reject').forEach(btn => btn.addEventListener('click', reject));
+}
+
+async function approve(e) {
+    const id = e.target.dataset.id;
+    await fetch(`/node-requests/${id}/approve`, {method: 'POST'});
+    loadRequests();
     loadNodes();
-});
+}
+
+async function reject(e) {
+    const id = e.target.dataset.id;
+    await fetch(`/node-requests/${id}`, {method: 'DELETE'});
+    loadRequests();
+}
 
 function initMap() {
     map = L.map('map').setView([0, 0], 2);
@@ -47,3 +56,4 @@ function initMap() {
 
 initMap();
 loadNodes();
+loadRequests();

@@ -18,7 +18,7 @@ body {
 }
 
 .main .card {
-    flex: 1 1 45%;
+    flex: 1 1 30%;
 }
 
 .card {
@@ -59,6 +59,15 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+}
+
+.approve {
+    background-color: #28a745;
+    margin-right: 5px;
+}
+
+.reject {
+    background-color: #dc3545;
 }
 
 #map {
