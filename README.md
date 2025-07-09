@@ -67,6 +67,7 @@ docker compose up debug-admin
 
 Once started, open `http://localhost:8080` to access a simple page showing the list of nodes and an interactive map.
 Ensure your devices send their HTTP requests to the same address (replace `localhost` with your server IP if needed).
+The admin service now persists nodes and pending requests under the `data/` directory (or a custom path via `-Dadmin.data.dir=...`).
 
 The repository does not include Leaflet images to keep the history light. Run the helper script to download them locally before starting the admin module:
 
