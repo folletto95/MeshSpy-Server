@@ -1,2 +1,4 @@
 admin/target/
 local/target/
+admin/src/main/resources/static/leaflet/images/
+admin/src/main/resources/static/leaflet/blank.png
