@@ -1,24 +1,47 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f2f5;
+    background-color: #e8eaf6;
     margin: 0;
     padding: 0;
 }
 
+.navbar {
+    background-color: #3949ab;
+    padding: 10px;
+}
+
+.navbar a {
+    color: white;
+    margin-right: 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
 .container {
     max-width: 1000px;
-    margin: 40px auto;
+    margin: 20px auto;
     padding: 20px;
 }
 
 .main {
     display: flex;
     gap: 20px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    align-items: flex-start;
 }
 
-.main .card {
-    flex: 1 1 30%;
+#node-list {
+    flex: 0 0 30%;
+}
+
+#map {
+    flex: 1 0 70%;
+    height: 500px;
+    background-color: #f5f7ff;
 }
 
 .card {
@@ -60,7 +83,6 @@ button {
     border-radius: 4px;
     cursor: pointer;
 }
-
 .approve {
     background-color: #28a745;
     margin-right: 5px;
