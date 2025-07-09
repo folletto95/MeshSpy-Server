@@ -6,9 +6,19 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 40px auto;
     padding: 20px;
+}
+
+.main {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.main .card {
+    flex: 1 1 45%;
 }
 
 .card {
@@ -53,4 +63,5 @@ button {
 
 #map {
     height: 400px;
+    width: 100%;
 }
