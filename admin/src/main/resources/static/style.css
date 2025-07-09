@@ -1,24 +1,48 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f2f5;
+    background-color: #e8eaf6;
     margin: 0;
     padding: 0;
 }
 
+.navbar {
+    background-color: #3949ab;
+    padding: 10px;
+}
+
+.navbar a {
+    color: white;
+    margin-right: 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
 .container {
     max-width: 1000px;
-    margin: 40px auto;
+    margin: 20px auto;
     padding: 20px;
 }
 
 .main {
     display: flex;
     gap: 20px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    align-items: flex-start;
 }
 
-.main .card {
-    flex: 1 1 45%;
+#node-list {
+    flex-basis: 30%;
+}
+
+#map {
+    flex-grow: 1;
+    height: 500px;
+    width: auto;
+    background-color: #f5f7ff;
 }
 
 .card {
@@ -59,9 +83,4 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-}
-
-#map {
-    height: 400px;
-    width: 100%;
 }
