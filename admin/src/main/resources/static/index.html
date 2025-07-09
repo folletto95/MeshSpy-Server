@@ -12,20 +12,25 @@
     <div id="node-list" class="card">
         <h2>Nodes</h2>
         <table id="nodes">
-            <thead><tr><th>ID</th><th>Name</th><th>Address</th></tr></thead>
+            <thead><tr><th>ID</th><th>Name</th><th>Address</th><th>Lat</th><th>Lon</th></tr></thead>
             <tbody></tbody>
         </table>
     </div>
+    <div id="map" class="card" style="height: 400px;"></div>
     <div id="add-node" class="card">
         <h2>Add Node</h2>
         <form id="node-form">
             <label>ID <input type="text" id="node-id" required></label>
             <label>Name <input type="text" id="node-name" required></label>
             <label>Address <input type="text" id="node-address" required></label>
+            <label>Latitude <input type="number" id="node-lat" step="any"></label>
+            <label>Longitude <input type="number" id="node-lon" step="any"></label>
             <button type="submit">Add</button>
         </form>
     </div>
 </div>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-sA+e2d0n0JdfM8KcVpN2zsJxxavq6b3cXwjk2f2ol3w=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-o1a30jow+/5T1vZ1UUvlFRYHb00nKTT0RP70dNDOJYw=" crossorigin=""></script>
 <script src="app.js"></script>
 </body>
 </html>
