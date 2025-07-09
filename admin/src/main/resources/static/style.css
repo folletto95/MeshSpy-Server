@@ -35,13 +35,12 @@ body {
 }
 
 #node-list {
-    flex-basis: 30%;
+    flex: 0 0 30%;
 }
 
 #map {
-    flex-grow: 1;
+    flex: 1 0 70%;
     height: 500px;
-    width: auto;
     background-color: #f5f7ff;
 }
 
