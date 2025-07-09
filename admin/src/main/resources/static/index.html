@@ -22,18 +22,14 @@
                 <tbody></tbody>
             </table>
         </div>
+        <div id="request-list" class="card">
+            <h2>Pending Requests</h2>
+            <table id="requests">
+                <thead><tr><th>ID</th><th>Name</th><th>Address</th><th></th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
         <div id="map" class="card"></div>
-    </div>
-    <div id="add-node" class="card">
-        <h2>Add Node</h2>
-        <form id="node-form">
-            <label>ID <input type="text" id="node-id" required></label>
-            <label>Name <input type="text" id="node-name" required></label>
-            <label>Address <input type="text" id="node-address" required></label>
-            <label>Latitude <input type="number" id="node-lat" step="any"></label>
-            <label>Longitude <input type="number" id="node-lon" step="any"></label>
-            <button type="submit">Add</button>
-        </form>
     </div>
 </div>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-sA+e2d0n0JdfM8KcVpN2zsJxxavq6b3cXwjk2f2ol3w=" crossorigin=""/>
