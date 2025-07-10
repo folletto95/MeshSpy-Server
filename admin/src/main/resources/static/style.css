@@ -59,6 +59,7 @@ body {
     width: var(--sidebar-width);
     height: calc(100% - var(--navbar-height));
     overflow-y: auto;
+    overflow-x: auto;
 }
 
 .clients {
@@ -99,6 +100,11 @@ body {
 table {
     width: 100%;
     border-collapse: collapse;
+}
+
+#node-list table {
+    table-layout: fixed;
+    word-break: break-word;
 }
 
 thead {
