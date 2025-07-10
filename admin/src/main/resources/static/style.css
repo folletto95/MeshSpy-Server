@@ -48,6 +48,7 @@ body {
     flex-wrap: nowrap;
     align-items: flex-start;
     margin-left: calc(var(--sidebar-width) + 20px);
+    width: calc(100% - var(--sidebar-width) - 20px);
 }
 
 
@@ -73,12 +74,13 @@ body {
 
 #map {
     flex: 1 0 auto;
-    height: 500px;
+    width: 100%;
+    height: calc(100vh - var(--navbar-height) - 40px);
     background-color: #f5f7ff;
 }
 
 #pending, #online, #offline {
-    flex: 1 0 33%;
+    margin-bottom: 20px;
 }
 
 #reset-db {
@@ -147,11 +149,6 @@ button {
     display: none;
 }
 
-#map {
-    height: 400px;
-    width: 100%;
-    background-color: #f5f7ff;
-}
 
 @media (max-width: 768px) {
     .navbar {
