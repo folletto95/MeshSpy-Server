@@ -74,6 +74,12 @@ The repository does not include Leaflet images to keep the history light. Run th
 ./scripts/get_leaflet_assets.sh
 ```
 
+The repository does not include Leaflet images to keep the history light. Run the helper script to download them locally before starting the admin module.  The script fetches the assets directly from GitHub:
+
+```bash
+./scripts/get_leaflet_assets.sh
+```
+
 ## Planned MQTT Configuration
 
 The MQTT broker configuration is planned through a `config.json` file:
