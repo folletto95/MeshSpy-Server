@@ -90,6 +90,17 @@ The admin service exposes a small JSON API used by the web pages under
   request is stored and the server replies with `202 Accepted`.
 * `POST /nodes/reset` – remove all nodes but keep pending requests (development only).
 
+### Node management endpoints
+
+Endpoints for firmware configuration backups and updates are provided under `/nodes/{id}`:
+
+* `GET /nodes/{id}/backups` – list stored configuration backups for the node.
+* `POST /nodes/{id}/backup` – upload a new configuration backup.
+* `POST /nodes/{id}/restore` – restore configuration from the provided backup data.
+* `POST /nodes/{id}/firmware/update` – record a firmware update request. The payload
+  can specify a version or URL of the image to install.
+* `GET /nodes/{id}/firmware` – return the latest known firmware version for the node.
+
 Example request body for `POST /nodes`:
 
 ```json

@@ -20,11 +20,17 @@ public class NodeService {
     private static final Logger log = LoggerFactory.getLogger(NodeService.class);
     private final Map<String, Node> nodes = new HashMap<>();
     private final Map<String, NodeRegistrationRequest> requests = new HashMap<>();
+    // configuration backups indexed by node id
+    private final Map<String, List<String>> backups = new HashMap<>();
+    // stored firmware version or image identifier per node
+    private final Map<String, String> firmware = new HashMap<>();
 
     private final ObjectMapper mapper = new ObjectMapper();
     private final Path dataDir = Paths.get(Optional.ofNullable(System.getProperty("admin.data.dir")).orElse("data"));
     private final Path nodesFile = dataDir.resolve("nodes.json");
     private final Path requestsFile = dataDir.resolve("requests.json");
+    private final Path backupsFile = dataDir.resolve("backups.json");
+    private final Path firmwareFile = dataDir.resolve("firmware.json");
 
     @PostConstruct
     private void load() {
@@ -34,6 +40,12 @@ public class NodeService {
             }
             if (Files.exists(requestsFile)) {
                 requests.putAll(mapper.readValue(requestsFile.toFile(), new TypeReference<Map<String, NodeRegistrationRequest>>() {}));
+            }
+            if (Files.exists(backupsFile)) {
+                backups.putAll(mapper.readValue(backupsFile.toFile(), new TypeReference<Map<String, List<String>>>() {}));
+            }
+            if (Files.exists(firmwareFile)) {
+                firmware.putAll(mapper.readValue(firmwareFile.toFile(), new TypeReference<Map<String, String>>() {}));
             }
         } catch (IOException e) {
             log.warn("Failed to load data", e);
@@ -48,10 +60,22 @@ public class NodeService {
         save(requestsFile, requests);
     }
 
+    private void saveBackups() {
+        save(backupsFile, backups);
+    }
+
+    private void saveFirmware() {
+        save(firmwareFile, firmware);
+    }
+
     public void reset() {
         nodes.clear();
+        backups.clear();
+        firmware.clear();
         try {
             Files.deleteIfExists(nodesFile);
+            Files.deleteIfExists(backupsFile);
+            Files.deleteIfExists(firmwareFile);
         } catch (IOException e) {
             log.warn("Failed to delete nodes file", e);
         }
@@ -136,5 +160,35 @@ public class NodeService {
         if (requests.remove(id) != null) {
             saveRequests();
         }
+    }
+
+    // ----- configuration backup operations -----
+    public void storeBackup(String id, String data) {
+        backups.computeIfAbsent(id, k -> new ArrayList<>()).add(data);
+        saveBackups();
+        log.debug("Stored configuration backup for {}", id);
+    }
+
+    public List<String> listBackups(String id) {
+        return backups.getOrDefault(id, Collections.emptyList());
+    }
+
+    public Optional<String> latestBackup(String id) {
+        List<String> b = backups.get(id);
+        if (b == null || b.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(b.get(b.size() - 1));
+    }
+
+    // ----- firmware operations -----
+    public void updateFirmware(String id, String version) {
+        firmware.put(id, version);
+        saveFirmware();
+        log.debug("Updated firmware for {} to {}", id, version);
+    }
+
+    public Optional<String> getFirmware(String id) {
+        return Optional.ofNullable(firmware.get(id));
     }
 }
