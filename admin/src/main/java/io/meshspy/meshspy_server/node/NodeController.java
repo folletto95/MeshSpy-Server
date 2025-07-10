@@ -41,4 +41,10 @@ public class NodeController {
         nodeService.addRequestFromNode(node);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+
+    @PostMapping("/reset")
+    public void reset() {
+        log.debug("API POST /nodes/reset");
+        nodeService.reset();
+    }
 }
