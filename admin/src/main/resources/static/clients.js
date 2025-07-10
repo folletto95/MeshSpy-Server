@@ -50,7 +50,7 @@ function initMap() {
 }
 
 async function resetDb() {
-    await fetch('/reset', {method:'POST'});
+    await fetch('/nodes/reset', {method:'POST'});
     loadClients();
 }
 
