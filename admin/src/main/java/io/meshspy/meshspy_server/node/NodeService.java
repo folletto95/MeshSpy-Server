@@ -50,12 +50,10 @@ public class NodeService {
 
     public void reset() {
         nodes.clear();
-        requests.clear();
         try {
             Files.deleteIfExists(nodesFile);
-            Files.deleteIfExists(requestsFile);
         } catch (IOException e) {
-            log.warn("Failed to delete data files", e);
+            log.warn("Failed to delete nodes file", e);
         }
     }
 
