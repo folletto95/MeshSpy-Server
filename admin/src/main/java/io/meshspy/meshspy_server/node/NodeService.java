@@ -78,7 +78,6 @@ public class NodeService {
         saveRequests();
         log.debug("Stored registration request {}", node.getId());
     }
-
     public List<Node> listNodes() {
         log.debug("Listing {} nodes", nodes.size());
         return new ArrayList<>(nodes.values());
