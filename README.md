@@ -66,6 +66,12 @@ docker compose up debug-admin
 
 Once started, open `http://localhost:8080` to access a simple page showing the list of nodes and an interactive map.
 
+The repository does not include Leaflet images to keep the history light. Run the helper script to download them locally before starting the admin module.  The script fetches the assets directly from GitHub:
+
+```bash
+./scripts/get_leaflet_assets.sh
+```
+
 ## Planned MQTT Configuration
 
 The MQTT broker configuration is planned through a `config.json` file:
