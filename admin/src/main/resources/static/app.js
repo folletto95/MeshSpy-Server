@@ -62,6 +62,12 @@ async function reject(e) {
     loadRequests();
 }
 
+async function resetDb() {
+    await fetch('/reset', {method: 'POST'});
+    loadNodes();
+    loadRequests();
+}
+
 function initMap() {
     const mapEl = document.getElementById('map');
     if (!mapEl) return;
@@ -81,6 +87,7 @@ function initMap() {
     });
 
     osm.addTo(map);
+
 }
 
 function resetMap() {
@@ -114,5 +121,4 @@ function toggleInfo(e) {
 initMap();
 loadNodes();
 loadRequests();
-const resetBtn = document.getElementById('reset-db');
-if (resetBtn) resetBtn.addEventListener('click', resetDb);
+document.getElementById('reset-db').addEventListener('click', resetDb);

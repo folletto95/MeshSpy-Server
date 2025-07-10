@@ -65,20 +65,7 @@ docker compose up devel   # builds the JARs
 docker compose up debug-admin
 ```
 
-Once started, open `http://localhost:8080` to access a simple page showing the list of nodes and an interactive map.
-Ensure your devices send their HTTP requests to the same address (replace `localhost` with your server IP if needed).
-The admin service now persists nodes and pending requests under the `data/` directory (or a custom path via `-Dadmin.data.dir=...`).
-The repository does not include Leaflet images to keep the history light. Run the helper script to download them locally before starting the admin module:
-
-```bash
-./scripts/get_leaflet_assets.sh
-```
-
-The repository does not include Leaflet images to keep the history light. Run the helper script to download them locally before starting the admin module.  The script fetches the assets directly from GitHub:
-
-```bash
-./scripts/get_leaflet_assets.sh
-```
+Once started, open `http://localhost:8080` to access simple pages showing the list of nodes or clients and an interactive map.
 
 The repository does not include Leaflet images to keep the history light. Run the helper script to download them locally before starting the admin module.  The script fetches the assets directly from GitHub:
 
@@ -87,7 +74,6 @@ The repository does not include Leaflet images to keep the history light. Run th
 ```
 
 The map attempts to load tiles from OpenStreetMap. If the tiles cannot be retrieved (for example due to blocked network access), it falls back to a blank offline tile and the map will appear empty.
-
 ## Admin REST API
 
 The admin service exposes a small JSON API used by the web pages under

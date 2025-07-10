@@ -10,12 +10,27 @@
 <nav class="navbar">
     <a href="dashboard.html">Dashboard</a>
     <a href="index.html">Nodes</a>
-    <a href="client.html">Client</a>
+    <a href="clients.html">Clients</a>
     <a href="settings.html">Settings</a>
 </nav>
 <div class="container">
     <h1>MeshSpy Node Administration</h1>
+    <div id="node-list" class="card sidebar">
+        <h2>Nodes</h2>
+        <button id="reset-db">Reset DB</button>
+        <table id="nodes">
+            <thead><tr><th>ID</th><th>Name</th><th>Address</th><th>Lat</th><th>Lon</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </div>
     <div class="main">
+        <div id="request-list" class="card">
+            <h2>Pending Requests</h2>
+            <table id="requests">
+                <thead><tr><th>ID</th><th>Name</th><th>Address</th><th></th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
         <aside id="sidebar">
             <div id="node-list" class="card">
                 <h2>Nodes</h2>
