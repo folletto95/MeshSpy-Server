@@ -47,6 +47,31 @@ body {
     overflow-y: auto;
 }
 
+.clients {
+    display: flex;
+    gap: 20px;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+}
+
+#node-list {
+    flex: 1 0 auto;
+}
+
+#map {
+    flex: 1 0 auto;
+    height: 500px;
+    background-color: #f5f7ff;
+}
+
+#pending, #online, #offline {
+    flex: 1 0 33%;
+}
+
+#reset-db {
+    margin-top: 10px;
+}
+
 
 .card {
     background: white;
@@ -94,6 +119,19 @@ button {
 
 .reject {
     background-color: #dc3545;
+}
+
+.info-btn {
+    background-color: #17a2b8;
+    margin-right: 5px;
+}
+
+.info-row {
+    background: #fafafa;
+}
+
+.hidden {
+    display: none;
 }
 
 #map {
