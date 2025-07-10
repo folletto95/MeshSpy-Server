@@ -120,7 +120,13 @@ public class NodeService {
         NodeRegistrationRequest request = requests.remove(id);
         if (request != null) {
             log.debug("Approving request {}", id);
-            addNode(new Node(request.getId(), request.getName(), request.getAddress(), request.getLatitude(), request.getLongitude()));
+            String name = request.getName();
+            if (name == null || name.isBlank()) {
+                name = Optional.ofNullable(request.getLongName())
+                        .orElse(request.getShortName());
+            }
+            addNode(new Node(request.getId(), name, request.getAddress(),
+                    request.getLatitude(), request.getLongitude()));
             saveRequests();
         }
     }
