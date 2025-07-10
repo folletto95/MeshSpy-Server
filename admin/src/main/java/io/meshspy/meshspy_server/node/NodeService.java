@@ -57,6 +57,27 @@ public class NodeService {
         }
     }
 
+    /**
+     * Check if a node is already registered/approved.
+     */
+    public boolean isApproved(String id) {
+        return nodes.containsKey(id);
+    }
+
+    /**
+     * Create or update a pending registration request for the given node.
+     */
+    public void addRequestFromNode(Node node) {
+        NodeRegistrationRequest req = new NodeRegistrationRequest(
+                node.getId(),
+                node.getName(),
+                node.getAddress(),
+                node.getLatitude(),
+                node.getLongitude());
+        requests.put(node.getId(), req);
+        saveRequests();
+        log.debug("Stored registration request {}", node.getId());
+    }
     public List<Node> listNodes() {
         log.debug("Listing {} nodes", nodes.size());
         return new ArrayList<>(nodes.values());
