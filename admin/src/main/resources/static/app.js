@@ -66,10 +66,27 @@ function initMap() {
     const mapEl = document.getElementById('map');
     if (!mapEl) return;
     map = L.map('map').setView([0, 0], 2);
-    L.tileLayer('leaflet/blank.png', {
-        maxZoom: 3,
-        attribution: 'Offline tiles'
-    }).addTo(map);
+    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors'
+    });
+
+    osm.on('tileerror', () => {
+        if (!map.hasLayer(osm)) return;
+        map.removeLayer(osm);
+        L.tileLayer('leaflet/blank.png', {
+            maxZoom: 3,
+            attribution: 'Offline tiles'
+        }).addTo(map);
+    });
+
+    osm.addTo(map);
+}
+
+function resetMap() {
+    if (map) {
+        map.setView([0,0], 2);
+    }
 }
 
 function resetMap() {

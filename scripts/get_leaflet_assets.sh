@@ -2,7 +2,8 @@
 set -e
 # Download Leaflet distribution and extract required assets
 VERSION="1.9.4"
-BASE_URL="https://unpkg.com/leaflet@${VERSION}/dist"
+# Use GitHub as source to avoid blocked CDN requests
+BASE_URL="https://raw.githubusercontent.com/Leaflet/Leaflet/v${VERSION}/dist"
 TARGET_DIR="$(dirname "$0")/../admin/src/main/resources/static/leaflet"
 mkdir -p "$TARGET_DIR"
 
