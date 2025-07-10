@@ -33,6 +33,10 @@ public class NodeController {
     @PostMapping
     public ResponseEntity<?> addNode(@RequestBody Node node) {
         log.debug("API POST /nodes {}", node.getId());
+        if (node.isClient()) {
+            Node saved = nodeService.addClient(node);
+            return new ResponseEntity<>(saved, HttpStatus.CREATED);
+        }
         if (nodeService.isApproved(node.getId())) {
             Node saved = nodeService.addNode(node);
             return new ResponseEntity<>(saved, HttpStatus.CREATED);

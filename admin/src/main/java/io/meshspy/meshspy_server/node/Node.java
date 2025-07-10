@@ -6,16 +6,23 @@ public class Node {
     private String address;
     private Double latitude;
     private Double longitude;
+    // true if this node represents a local client connected via USB
+    private boolean client;
 
     public Node() {
     }
 
     public Node(String id, String name, String address, Double latitude, Double longitude) {
+        this(id, name, address, latitude, longitude, false);
+    }
+
+    public Node(String id, String name, String address, Double latitude, Double longitude, boolean client) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.client = client;
     }
 
     public String getId() {
@@ -56,5 +63,13 @@ public class Node {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public boolean isClient() {
+        return client;
+    }
+
+    public void setClient(boolean client) {
+        this.client = client;
     }
 }
