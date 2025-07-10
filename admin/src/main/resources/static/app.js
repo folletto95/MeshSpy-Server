@@ -36,11 +36,17 @@ async function loadRequests() {
     table.innerHTML = '';
     requests.forEach(r => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${r.id}</td><td>${r.name}</td><td>${r.address}</td><td><button data-id="${r.id}" class="approve">Approve</button> <button data-id="${r.id}" class="reject">Reject</button></td>`;
+        tr.innerHTML = `<td>${r.id}</td><td>${r.name || r.longName}</td><td>${r.address}</td><td><button data-id="${r.id}" class="info-btn">i</button> <button data-id="${r.id}" class="approve">Approve</button> <button data-id="${r.id}" class="reject">Reject</button></td>`;
         table.appendChild(tr);
+        const info = document.createElement('tr');
+        info.id = `info-${r.id}`;
+        info.classList.add('info-row', 'hidden');
+        info.innerHTML = `<td colspan="4"><strong>Model:</strong> ${r.model ?? ''}<br><strong>Firmware:</strong> ${r.firmware ?? ''}<br><strong>Longname:</strong> ${r.longName ?? ''}<br><strong>Shortname:</strong> ${r.shortName ?? ''}</td>`;
+        table.appendChild(info);
     });
     document.querySelectorAll('.approve').forEach(btn => btn.addEventListener('click', approve));
     document.querySelectorAll('.reject').forEach(btn => btn.addEventListener('click', reject));
+    document.querySelectorAll('.info-btn').forEach(btn => btn.addEventListener('click', toggleInfo));
 }
 
 async function approve(e) {
@@ -72,8 +78,24 @@ function resetMap() {
     }
 }
 
+async function resetDb() {
+    if (confirm('Reset all nodes and requests?')) {
+        await fetch('/nodes/reset', {method: 'POST'});
+        loadNodes();
+        loadRequests();
+        resetMap();
+    }
+}
+
+function toggleInfo(e) {
+    const row = document.getElementById(`info-${e.target.dataset.id}`);
+    if (row) {
+        row.classList.toggle('hidden');
+    }
+}
+
 initMap();
 loadNodes();
 loadRequests();
-const resetBtn = document.getElementById('reset-map');
-if (resetBtn) resetBtn.addEventListener('click', resetMap);
+const resetBtn = document.getElementById('reset-db');
+if (resetBtn) resetBtn.addEventListener('click', resetDb);

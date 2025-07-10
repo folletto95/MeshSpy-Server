@@ -35,6 +35,12 @@ body {
     align-items: flex-start;
 }
 
+#sidebar {
+    flex: 0 0 250px;
+    display: flex;
+    flex-direction: column;
+}
+
 .clients {
     display: flex;
     gap: 20px;
@@ -43,11 +49,11 @@ body {
 }
 
 #node-list {
-    flex: 0 0 30%;
+    flex: 1 0 auto;
 }
 
 #map {
-    flex: 1 0 70%;
+    flex: 1 0 auto;
     height: 500px;
     background-color: #f5f7ff;
 }
@@ -56,7 +62,7 @@ body {
     flex: 1 0 33%;
 }
 
-#reset-map {
+#reset-db {
     margin-top: 10px;
 }
 
@@ -106,6 +112,19 @@ button {
 
 .reject {
     background-color: #dc3545;
+}
+
+.info-btn {
+    background-color: #17a2b8;
+    margin-right: 5px;
+}
+
+.info-row {
+    background: #fafafa;
+}
+
+.hidden {
+    display: none;
 }
 
 #map {

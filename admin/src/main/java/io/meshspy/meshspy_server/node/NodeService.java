@@ -48,6 +48,17 @@ public class NodeService {
         save(requestsFile, requests);
     }
 
+    public void reset() {
+        nodes.clear();
+        requests.clear();
+        try {
+            Files.deleteIfExists(nodesFile);
+            Files.deleteIfExists(requestsFile);
+        } catch (IOException e) {
+            log.warn("Failed to delete data files", e);
+        }
+    }
+
     private void save(Path file, Object data) {
         try {
             Files.createDirectories(dataDir);
