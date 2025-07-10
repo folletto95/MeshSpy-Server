@@ -28,22 +28,25 @@ body {
     padding: 20px;
 }
 
+
 .main {
     display: flex;
     gap: 20px;
     flex-wrap: nowrap;
     align-items: flex-start;
+    margin-left: 270px;
 }
 
-#node-list {
-    flex: 0 0 30%;
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    overflow-y: auto;
 }
 
-#map {
-    flex: 1 0 70%;
-    height: 500px;
-    background-color: #f5f7ff;
-}
 
 .card {
     background: white;
@@ -96,4 +99,5 @@ button {
 #map {
     height: 400px;
     width: 100%;
+    background-color: #f5f7ff;
 }

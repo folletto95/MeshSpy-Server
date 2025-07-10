@@ -10,18 +10,20 @@
 <nav class="navbar">
     <a href="dashboard.html">Dashboard</a>
     <a href="index.html">Nodes</a>
+    <a href="clients.html">Clients</a>
     <a href="settings.html">Settings</a>
 </nav>
 <div class="container">
     <h1>MeshSpy Node Administration</h1>
+    <div id="node-list" class="card sidebar">
+        <h2>Nodes</h2>
+        <button id="reset-db">Reset DB</button>
+        <table id="nodes">
+            <thead><tr><th>ID</th><th>Name</th><th>Address</th><th>Lat</th><th>Lon</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </div>
     <div class="main">
-        <div id="node-list" class="card">
-            <h2>Nodes</h2>
-            <table id="nodes">
-                <thead><tr><th>ID</th><th>Name</th><th>Address</th><th>Lat</th><th>Lon</th></tr></thead>
-                <tbody></tbody>
-            </table>
-        </div>
         <div id="request-list" class="card">
             <h2>Pending Requests</h2>
             <table id="requests">
@@ -32,8 +34,8 @@
         <div id="map" class="card"></div>
     </div>
 </div>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-sA+e2d0n0JdfM8KcVpN2zsJxxavq6b3cXwjk2f2ol3w=" crossorigin=""/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-o1a30jow+/5T1vZ1UUvlFRYHb00nKTT0RP70dNDOJYw=" crossorigin=""></script>
+<link rel="stylesheet" href="leaflet/leaflet.css" />
+<script src="leaflet/leaflet.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

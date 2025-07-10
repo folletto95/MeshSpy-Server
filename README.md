@@ -64,7 +64,15 @@ You can run it with Docker Compose:
 docker compose up debug-admin
 ```
 
-Once started, open `http://localhost:8080` to access a simple page showing the list of nodes and an interactive map.
+Once started, open `http://localhost:8080` to access simple pages showing the list of nodes or clients and an interactive map.
+
+The repository does not include Leaflet images to keep the history light. Run the helper script to download them locally before starting the admin module.  The script fetches the assets directly from GitHub:
+
+```bash
+./scripts/get_leaflet_assets.sh
+```
+
+The map attempts to load tiles from OpenStreetMap. If the tiles cannot be retrieved (for example due to blocked network access), it falls back to a blank offline tile and the map will appear empty.
 
 ## Planned MQTT Configuration
 
