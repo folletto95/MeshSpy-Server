@@ -4,16 +4,32 @@ let markers = [];
 async function loadClients() {
     const response = await fetch('/clients');
     const clients = await response.json();
-    const tbody = document.querySelector('#clients tbody');
-    tbody.innerHTML = '';
+    const pending = document.querySelector('#pending tbody');
+    const online = document.querySelector('#online tbody');
+    const offline = document.querySelector('#offline tbody');
+    pending.innerHTML = '';
+    online.innerHTML = '';
+    offline.innerHTML = '';
     markers.forEach(m => m.remove());
     markers = [];
     clients.forEach(c => {
+        if (!c.name) return;
+        let target = online;
+        const status = c.status || (c.online ? 'online' : c.approved ? 'offline' : 'pending');
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${c.id}</td><td>${c.name}</td>`;
-        tbody.appendChild(tr);
+        if (status === 'pending') {
+            target = pending;
+            tr.innerHTML = `<td>${c.id}</td><td>${c.name}</td><td>${c.address ?? ''}</td>`;
+        } else {
+            if (status === 'offline') target = offline;
+            tr.innerHTML = `<td>${c.id}</td><td>${c.name}</td>`;
+        }
+        target.appendChild(tr);
+
         if (c.latitude != null && c.longitude != null && map) {
-            const marker = L.marker([c.latitude, c.longitude]).addTo(map).bindPopup(c.name);
+            const count = c.nodeCount ?? c.nodes ?? c.connectedNodes ?? 0;
+            const marker = L.marker([c.latitude, c.longitude]).addTo(map)
+                .bindTooltip(`${c.name} - ${count} nodi connessi`);
             markers.push(marker);
         }
     });
