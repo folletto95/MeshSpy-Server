@@ -88,7 +88,7 @@ The admin service exposes a small JSON API used by the web pages under
 * `POST /nodes` – register a node. If the node ID has already been approved the
   saved node is returned with status `201 Created`; otherwise a registration
   request is stored and the server replies with `202 Accepted`.
-* `POST /nodes/reset` – remove all nodes and requests (development only).
+* `POST /nodes/reset` – remove all nodes but keep pending requests (development only).
 
 Example request body for `POST /nodes`:
 
