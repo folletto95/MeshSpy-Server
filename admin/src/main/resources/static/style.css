@@ -35,6 +35,13 @@ body {
     align-items: flex-start;
 }
 
+.clients {
+    display: flex;
+    gap: 20px;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+}
+
 #node-list {
     flex: 0 0 30%;
 }
@@ -43,6 +50,14 @@ body {
     flex: 1 0 70%;
     height: 500px;
     background-color: #f5f7ff;
+}
+
+#pending, #online, #offline {
+    flex: 1 0 33%;
+}
+
+#reset-map {
+    margin-top: 10px;
 }
 
 .card {
