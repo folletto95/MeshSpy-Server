@@ -28,12 +28,26 @@ public class NodeService {
     private final Map<String, String> firmware = new HashMap<>();
 
     private final ObjectMapper mapper = new ObjectMapper();
-    private final Path dataDir = Paths.get(Optional.ofNullable(System.getProperty("admin.data.dir")).orElse("data"));
+    private final Path dataDir = Paths.get(resolveDataDir());
     private final Path nodesFile = dataDir.resolve("nodes.json");
     private final Path clientsFile = dataDir.resolve("clients.json");
     private final Path requestsFile = dataDir.resolve("requests.json");
     private final Path backupsFile = dataDir.resolve("backups.json");
     private final Path firmwareFile = dataDir.resolve("firmware.json");
+
+    private static String resolveDataDir() {
+        String dir = System.getProperty("admin.data.dir");
+        if (dir == null || dir.isBlank()) {
+            dir = System.getProperty("ADMIN_DATA_DIR");
+        }
+        if (dir == null || dir.isBlank()) {
+            dir = System.getenv("ADMIN_DATA_DIR");
+        }
+        if (dir == null || dir.isBlank()) {
+            dir = "data";
+        }
+        return dir;
+    }
 
     @PostConstruct
     private void load() {

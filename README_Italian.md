@@ -74,6 +74,16 @@ La UI sarà accessibile su `http://localhost:5173` (in fase di sviluppo).
 docker-compose up -d
 ```
 
+### Configurazione tramite `.env`
+
+I moduli admin e local caricano automaticamente le variabili definite in un file `.env` posizionato nella directory principale del progetto. Ad esempio è possibile impostare la cartella in cui salvare i dati del servizio admin specificando:
+
+```properties
+ADMIN_DATA_DIR=/percorso/dati
+```
+
+Le variabili d'ambiente reali hanno comunque precedenza sui valori presenti nel file `.env`.
+
 ## Contribuire
 
 Se desideri contribuire al progetto, sentiti libero di aprire issue, proporre modifiche o miglioramenti tramite pull request.

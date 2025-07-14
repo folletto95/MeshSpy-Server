@@ -74,6 +74,16 @@ The repository does not include Leaflet images to keep the history light. Run th
 ```
 
 The map attempts to load tiles from OpenStreetMap. If the tiles cannot be retrieved (for example due to blocked network access), it falls back to a blank offline tile and the map will appear empty.
+
+### Environment configuration
+
+Both the admin and local modules automatically load variables from a `.env` file at startup. You can override default paths or other settings by creating a file named `.env` in the project root:
+
+```properties
+ADMIN_DATA_DIR=/path/to/data
+```
+
+Values provided via real environment variables still take precedence over the contents of `.env`.
 ## Admin REST API
 
 The admin service exposes a small JSON API used by the web pages under
