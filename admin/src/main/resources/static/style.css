@@ -1,14 +1,27 @@
+:root {
+    --navbar-height: 50px;
+    --sidebar-width: 250px;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #e8eaf6;
     margin: 0;
-    padding: 0;
+    padding-top: var(--navbar-height);
 }
 
 .navbar {
     /* Updated background to green for better visibility */
     background-color: #28a745;
     padding: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--navbar-height);
+    display: flex;
+    align-items: center;
+    z-index: 1000;
 }
 
 .navbar a {
@@ -28,7 +41,28 @@ body {
     padding: 20px;
 }
 
+
 .main {
+    display: flex;
+    gap: 20px;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    margin-left: calc(var(--sidebar-width) + 20px);
+    width: calc(100% - var(--sidebar-width) - 20px);
+}
+
+
+.sidebar {
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    width: var(--sidebar-width);
+    height: calc(100% - var(--navbar-height));
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.clients {
     display: flex;
     gap: 20px;
     flex-wrap: nowrap;
@@ -36,14 +70,24 @@ body {
 }
 
 #node-list {
-    flex: 0 0 30%;
+    flex: 1 0 auto;
 }
 
 #map {
-    flex: 1 0 70%;
-    height: 500px;
+    flex: 1 0 auto;
+    width: 100%;
+    height: calc(100vh - var(--navbar-height) - 40px);
     background-color: #f5f7ff;
 }
+
+#pending, #online, #offline {
+    margin-bottom: 20px;
+}
+
+#reset-db {
+    margin-top: 10px;
+}
+
 
 .card {
     background: white;
@@ -56,6 +100,11 @@ body {
 table {
     width: 100%;
     border-collapse: collapse;
+}
+
+#node-list table {
+    table-layout: fixed;
+    word-break: break-word;
 }
 
 thead {
@@ -93,7 +142,31 @@ button {
     background-color: #dc3545;
 }
 
-#map {
-    height: 400px;
-    width: 100%;
+.info-btn {
+    background-color: #17a2b8;
+    margin-right: 5px;
+}
+
+.info-row {
+    background: #fafafa;
+}
+
+.hidden {
+    display: none;
+}
+
+
+@media (max-width: 768px) {
+    .navbar {
+        position: fixed;
+    }
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+    .main {
+        margin-left: 0;
+        flex-direction: column;
+    }
 }

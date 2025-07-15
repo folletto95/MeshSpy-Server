@@ -58,13 +58,78 @@ The UI will be accessible at `http://localhost:5173` (currently under developmen
 ### Admin Module
 
 A minimal Spring Boot admin interface is available under the `admin` module.
-You can run it with Docker Compose:
+First build the application, then start the admin service with Docker Compose:
 
 ```bash
+docker compose up devel   # builds the JARs
 docker compose up debug-admin
 ```
 
-Once started, open `http://localhost:8080` to access a simple page showing the list of nodes and an interactive map.
+Once started, open `http://localhost:8080` to access simple pages showing the list of nodes or clients and an interactive map.
+
+The repository does not include Leaflet images to keep the history light. Run the helper script to download them locally before starting the admin module.  The script fetches the assets directly from GitHub:
+
+```bash
+./scripts/get_leaflet_assets.sh
+```
+
+The map attempts to load tiles from OpenStreetMap. If the tiles cannot be retrieved (for example due to blocked network access), it falls back to a blank offline tile and the map will appear empty.
+## Admin REST API
+
+The admin service exposes a small JSON API used by the web pages under
+`admin/src/main/resources/static` and by Meshtastic devices. When running
+`docker compose up debug-admin` the service is reachable at
+`http://localhost:8080`.
+
+### Node endpoints
+
+* `GET /nodes` – list all approved nodes.
+* `GET /nodes/{id}` – details for a single node or `404 Not Found`.
+* `POST /nodes` – register a node. If the node ID has already been approved the
+  saved node is returned with status `201 Created`; otherwise a registration
+  request is stored and the server replies with `202 Accepted`.
+* `POST /nodes/reset` – remove all nodes but keep pending requests (development only).
+
+### Client endpoints
+
+Endpoints for local clients physically connected via USB:
+
+* `GET /clients` – list connected clients.
+* `POST /clients` – register a new client using the same payload as `POST /nodes` with `"client": true`.
+* `POST /clients/reset` – remove all stored clients.
+
+### Node management endpoints
+
+Endpoints for firmware configuration backups and updates are provided under `/nodes/{id}`:
+
+* `GET /nodes/{id}/backups` – list stored configuration backups for the node.
+* `POST /nodes/{id}/backup` – upload a new configuration backup.
+* `POST /nodes/{id}/restore` – restore configuration from the provided backup data.
+* `POST /nodes/{id}/firmware/update` – record a firmware update request. The payload
+  can specify a version or URL of the image to install.
+* `GET /nodes/{id}/firmware` – return the latest known firmware version for the node.
+
+Example request body for `POST /nodes`:
+
+```json
+{
+  "id": "AA:BB:CC",
+  "name": "Test Node",
+  "address": "192.168.1.10",
+  "latitude": 45.0,
+  "longitude": 9.0
+}
+```
+
+### Registration request endpoints
+
+* `GET /node-requests` – list pending registration requests.
+* `POST /node-requests` – create a new request. In addition to the fields above
+  it accepts `model`, `firmware`, `longName` and `shortName`.
+* `POST /node-requests/{id}/approve` – approve a request and promote the node.
+* `DELETE /node-requests/{id}` – reject and delete a request.
+
+All endpoints return JSON data.
 
 The repository does not include Leaflet images to keep the history light. Run the helper script to download them locally before starting the admin module.  The script fetches the assets directly from GitHub:
 

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clients - MeshSpy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="navbar">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="index.html">Nodes</a>
+    <a href="clients.html">Clients</a>
+    <a href="settings.html">Settings</a>
+</nav>
+<div id="client-list" class="sidebar">
+    <button id="reset-db">Reset DB</button>
+    <div id="pending" class="card">
+        <h2>Da approvare</h2>
+        <table>
+            <thead><tr><th>ID</th><th>Name</th><th>Address</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div id="online" class="card">
+        <h2>Approvati Online</h2>
+        <table>
+            <thead><tr><th>ID</th><th>Name</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div id="offline" class="card">
+        <h2>Offline</h2>
+        <table>
+            <thead><tr><th>ID</th><th>Name</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+<div class="main">
+    <div id="map" class="card"></div>
+</div>
+<link rel="stylesheet" href="leaflet/leaflet.css" />
+<script src="leaflet/leaflet.js"></script>
+<script src="clients.js"></script>
+</body>
+</html>

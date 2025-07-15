@@ -6,6 +6,10 @@ public class NodeRegistrationRequest {
     private String address;
     private Double latitude;
     private Double longitude;
+    private String model;
+    private String firmware;
+    private String longName;
+    private String shortName;
 
     public NodeRegistrationRequest() {}
 
@@ -15,6 +19,15 @@ public class NodeRegistrationRequest {
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public NodeRegistrationRequest(String id, String name, String address, Double latitude, Double longitude,
+                                   String model, String firmware, String longName, String shortName) {
+        this(id, name, address, latitude, longitude);
+        this.model = model;
+        this.firmware = firmware;
+        this.longName = longName;
+        this.shortName = shortName;
     }
 
     public String getId() { return id; }
@@ -31,4 +44,16 @@ public class NodeRegistrationRequest {
 
     public Double getLongitude() { return longitude; }
     public void setLongitude(Double longitude) { this.longitude = longitude; }
+
+    public String getModel() { return model; }
+    public void setModel(String model) { this.model = model; }
+
+    public String getFirmware() { return firmware; }
+    public void setFirmware(String firmware) { this.firmware = firmware; }
+
+    public String getLongName() { return longName; }
+    public void setLongName(String longName) { this.longName = longName; }
+
+    public String getShortName() { return shortName; }
+    public void setShortName(String shortName) { this.shortName = shortName; }
 }
