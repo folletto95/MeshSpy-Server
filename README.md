@@ -90,6 +90,14 @@ The admin service exposes a small JSON API used by the web pages under
   request is stored and the server replies with `202 Accepted`.
 * `POST /nodes/reset` – remove all nodes but keep pending requests (development only).
 
+### Client endpoints
+
+Endpoints for local clients physically connected via USB:
+
+* `GET /clients` – list connected clients.
+* `POST /clients` – register a new client using the same payload as `POST /nodes` with `"client": true`.
+* `POST /clients/reset` – remove all stored clients.
+
 ### Node management endpoints
 
 Endpoints for firmware configuration backups and updates are provided under `/nodes/{id}`:
