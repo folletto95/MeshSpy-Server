@@ -72,6 +72,8 @@ function initMap() {
     const mapEl = document.getElementById('map');
     if (!mapEl) return;
     map = L.map('map').setView([0, 0], 2);
+
+
     const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; OpenStreetMap contributors'
@@ -87,6 +89,7 @@ function initMap() {
     });
 
     osm.addTo(map);
+
 
 }
 
@@ -111,11 +114,6 @@ async function resetDb() {
     }
 }
 
-function toggleInfo(e) {
-    const row = document.getElementById(`info-${e.target.dataset.id}`);
-    if (row) {
-        row.classList.toggle('hidden');
-    }
 }
 
 initMap();

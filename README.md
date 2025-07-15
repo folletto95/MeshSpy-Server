@@ -131,6 +131,14 @@ Example request body for `POST /nodes`:
 
 All endpoints return JSON data.
 
+The repository does not include Leaflet images to keep the history light. Run the helper script to download them locally before starting the admin module.  The script fetches the assets directly from GitHub:
+
+```bash
+./scripts/get_leaflet_assets.sh
+```
+
+The map attempts to load tiles from OpenStreetMap. If the tiles cannot be retrieved (for example due to blocked network access), it falls back to a blank offline tile and the map will appear empty.
+
 ## Planned MQTT Configuration
 
 The MQTT broker configuration is planned through a `config.json` file:
