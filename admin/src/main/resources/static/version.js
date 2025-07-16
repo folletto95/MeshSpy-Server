@@ -1,6 +1,6 @@
 async function loadVersion(){
     try {
-        const response = await fetch('/version');
+        const response = await fetch('version');
         const v = await response.text();
         const el = document.getElementById('version');
         if (el) {
