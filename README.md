@@ -95,8 +95,13 @@ The admin service exposes a small JSON API used by the web pages under
 Endpoints for local clients physically connected via USB:
 
 * `GET /clients` – list connected clients.
-* `POST /clients` – register a new client using the same payload as `POST /nodes` with `"client": true`.
+* `POST /clients` – register a new client using the same payload as `POST /nodes` with `"client": true`. If the client is not yet approved the request is stored and the server replies with `202 Accepted`.
 * `POST /clients/reset` – remove all stored clients.
+* `GET /client-requests` – list pending client registration requests.
+* `POST /client-requests/{id}/approve` – approve a pending client.
+* `DELETE /client-requests/{id}` – reject a client request.
+* `POST /clients/{id}/data` – send generic data from the client.
+* `GET /clients/{id}/data` – list all received data for the client.
 
 ### Node management endpoints
 
@@ -157,6 +162,29 @@ The option to launch MeshSpy with Docker is planned:
 ```bash
 docker-compose up -d
 ```
+
+## Example client implementation
+
+Approved clients can periodically send their data to the admin service. Below is a minimal Python example that registers a client and posts some data:
+
+```python
+import requests
+
+client = {
+    "id": "USB01",
+    "name": "Local USB client",
+    "client": True
+}
+
+resp = requests.post("http://localhost:8080/clients", json=client)
+if resp.status_code == 202:
+    print("Waiting for approval...")
+    exit()
+
+requests.post(f"http://localhost:8080/clients/{client['id']}/data", data="hello")
+```
+
+After approval, the data sent by the client can be retrieved with `GET /clients/{id}/data`.
 
 ## Contributing
 

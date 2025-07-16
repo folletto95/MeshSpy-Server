@@ -19,21 +19,28 @@ import java.util.*;
 public class NodeService {
     private static final Logger log = LoggerFactory.getLogger(NodeService.class);
     private final Map<String, Node> nodes = new HashMap<>();
-    // local clients physically connected via USB
+    // local clients physically connected via USB and approved
     private final Map<String, Node> clients = new HashMap<>();
+    // pending node registration requests
     private final Map<String, NodeRegistrationRequest> requests = new HashMap<>();
+    // pending client registration requests
+    private final Map<String, NodeRegistrationRequest> clientRequests = new HashMap<>();
     // configuration backups indexed by node id
     private final Map<String, List<String>> backups = new HashMap<>();
     // stored firmware version or image identifier per node
     private final Map<String, String> firmware = new HashMap<>();
+    // generic data sent by clients indexed by client id
+    private final Map<String, List<String>> clientData = new HashMap<>();
 
     private final ObjectMapper mapper = new ObjectMapper();
     private final Path dataDir = Paths.get(Optional.ofNullable(System.getProperty("admin.data.dir")).orElse("data"));
     private final Path nodesFile = dataDir.resolve("nodes.json");
     private final Path clientsFile = dataDir.resolve("clients.json");
     private final Path requestsFile = dataDir.resolve("requests.json");
+    private final Path clientRequestsFile = dataDir.resolve("client_requests.json");
     private final Path backupsFile = dataDir.resolve("backups.json");
     private final Path firmwareFile = dataDir.resolve("firmware.json");
+    private final Path clientDataFile = dataDir.resolve("client_data.json");
 
     @PostConstruct
     private void load() {
@@ -47,11 +54,17 @@ public class NodeService {
             if (Files.exists(requestsFile)) {
                 requests.putAll(mapper.readValue(requestsFile.toFile(), new TypeReference<Map<String, NodeRegistrationRequest>>() {}));
             }
+            if (Files.exists(clientRequestsFile)) {
+                clientRequests.putAll(mapper.readValue(clientRequestsFile.toFile(), new TypeReference<Map<String, NodeRegistrationRequest>>() {}));
+            }
             if (Files.exists(backupsFile)) {
                 backups.putAll(mapper.readValue(backupsFile.toFile(), new TypeReference<Map<String, List<String>>>() {}));
             }
             if (Files.exists(firmwareFile)) {
                 firmware.putAll(mapper.readValue(firmwareFile.toFile(), new TypeReference<Map<String, String>>() {}));
+            }
+            if (Files.exists(clientDataFile)) {
+                clientData.putAll(mapper.readValue(clientDataFile.toFile(), new TypeReference<Map<String, List<String>>>() {}));
             }
         } catch (IOException e) {
             log.warn("Failed to load data", e);
@@ -70,6 +83,10 @@ public class NodeService {
         save(requestsFile, requests);
     }
 
+    private void saveClientRequests() {
+        save(clientRequestsFile, clientRequests);
+    }
+
     private void saveBackups() {
         save(backupsFile, backups);
     }
@@ -78,14 +95,22 @@ public class NodeService {
         save(firmwareFile, firmware);
     }
 
+    private void saveClientData() {
+        save(clientDataFile, clientData);
+    }
+
     public void reset() {
         nodes.clear();
         clients.clear();
+        clientRequests.clear();
+        clientData.clear();
         backups.clear();
         firmware.clear();
         try {
             Files.deleteIfExists(nodesFile);
             Files.deleteIfExists(clientsFile);
+            Files.deleteIfExists(clientRequestsFile);
+            Files.deleteIfExists(clientDataFile);
             Files.deleteIfExists(backupsFile);
             Files.deleteIfExists(firmwareFile);
         } catch (IOException e) {
@@ -95,8 +120,12 @@ public class NodeService {
 
     public void resetClients() {
         clients.clear();
+        clientRequests.clear();
+        clientData.clear();
         try {
             Files.deleteIfExists(clientsFile);
+            Files.deleteIfExists(clientRequestsFile);
+            Files.deleteIfExists(clientDataFile);
         } catch (IOException e) {
             log.warn("Failed to delete clients file", e);
         }
@@ -119,11 +148,18 @@ public class NodeService {
     }
 
     /**
+     * Check if a local client is already approved.
+     */
+    public boolean isClientApproved(String id) {
+        return clients.containsKey(id);
+    }
+
+    /**
      * Create or update a pending registration request for the given node.
      */
     public void addRequestFromNode(Node node) {
         if (node.isClient()) {
-            addClient(node);
+            addClientRequestFromNode(node);
             return;
         }
         NodeRegistrationRequest req = new NodeRegistrationRequest(
@@ -135,6 +171,22 @@ public class NodeService {
         requests.put(node.getId(), req);
         saveRequests();
         log.debug("Stored registration request {}", node.getId());
+    }
+
+    public void addClientRequestFromNode(Node node) {
+        NodeRegistrationRequest req = new NodeRegistrationRequest(
+                node.getId(), node.getName(), node.getAddress(),
+                node.getLatitude(), node.getLongitude());
+        clientRequests.put(node.getId(), req);
+        saveClientRequests();
+        log.debug("Stored client registration request {}", node.getId());
+    }
+
+    public NodeRegistrationRequest addClientRequest(NodeRegistrationRequest request) {
+        clientRequests.put(request.getId(), request);
+        saveClientRequests();
+        log.debug("Adding client request {}", request.getId());
+        return request;
     }
     public List<Node> listNodes() {
         log.debug("Listing {} nodes", nodes.size());
@@ -177,6 +229,11 @@ public class NodeService {
         return new ArrayList<>(requests.values());
     }
 
+    public List<NodeRegistrationRequest> listClientRequests() {
+        log.debug("Listing {} client requests", clientRequests.size());
+        return new ArrayList<>(clientRequests.values());
+    }
+
     public void approveRequest(String id) {
         NodeRegistrationRequest request = requests.remove(id);
         if (request != null) {
@@ -192,11 +249,44 @@ public class NodeService {
         }
     }
 
+    public void approveClientRequest(String id) {
+        NodeRegistrationRequest request = clientRequests.remove(id);
+        if (request != null) {
+            log.debug("Approving client request {}", id);
+            String name = request.getName();
+            if (name == null || name.isBlank()) {
+                name = Optional.ofNullable(request.getLongName())
+                        .orElse(request.getShortName());
+            }
+            addClient(new Node(request.getId(), name, request.getAddress(),
+                    request.getLatitude(), request.getLongitude(), true));
+            saveClientRequests();
+        }
+    }
+
     public void rejectRequest(String id) {
         log.debug("Rejecting request {}", id);
         if (requests.remove(id) != null) {
             saveRequests();
         }
+    }
+
+    public void rejectClientRequest(String id) {
+        log.debug("Rejecting client request {}", id);
+        if (clientRequests.remove(id) != null) {
+            saveClientRequests();
+        }
+    }
+
+    // ----- client data operations -----
+    public void storeClientData(String id, String data) {
+        clientData.computeIfAbsent(id, k -> new ArrayList<>()).add(data);
+        saveClientData();
+        log.debug("Stored data for client {}", id);
+    }
+
+    public List<String> listClientData(String id) {
+        return clientData.getOrDefault(id, Collections.emptyList());
     }
 
     // ----- configuration backup operations -----
