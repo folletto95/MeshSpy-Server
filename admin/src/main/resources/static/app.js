@@ -2,7 +2,7 @@ let map;
 let markers = [];
 
 async function loadNodes() {
-    const response = await fetch('/nodes');
+    const response = await fetch('nodes');
     const nodes = await response.json();
     const nodesTable = document.querySelector('#nodes tbody');
     const onlineTable = document.querySelector('#online tbody');
@@ -29,7 +29,7 @@ async function loadNodes() {
 }
 
 async function loadRequests() {
-    const response = await fetch('/node-requests');
+    const response = await fetch('node-requests');
     const requests = await response.json();
     const table = document.querySelector('#requests tbody') || document.querySelector('#pending tbody');
     if (!table) return;
@@ -63,7 +63,7 @@ async function reject(e) {
 }
 
 async function resetDb() {
-    await fetch('/nodes/reset', {method: 'POST'});
+    await fetch('nodes/reset', {method: 'POST'});
     loadNodes();
     loadRequests();
 }
@@ -107,7 +107,7 @@ function resetMap() {
 
 async function resetDb() {
     if (confirm('Reset all nodes and requests?')) {
-        await fetch('/nodes/reset', {method: 'POST'});
+        await fetch('nodes/reset', {method: 'POST'});
         loadNodes();
         loadRequests();
         resetMap();

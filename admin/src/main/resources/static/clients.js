@@ -2,7 +2,7 @@ let map;
 let markers = [];
 
 async function loadClients() {
-    const response = await fetch('/clients');
+    const response = await fetch('clients');
     const clients = await response.json();
     const pending = document.querySelector('#pending tbody');
     const online = document.querySelector('#online tbody');
@@ -50,7 +50,7 @@ function initMap() {
 }
 
 async function resetDb() {
-    await fetch('/clients/reset', {method:'POST'});
+    await fetch('clients/reset', {method:'POST'});
     loadClients();
 }
 
