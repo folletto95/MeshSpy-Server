@@ -61,4 +61,10 @@ class NodeControllerTests {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML));    }
+
+    @Test
+    void versionEndpoint() throws Exception {
+        mockMvc.perform(get("/version"))
+                .andExpect(status().isOk());
+    }
 }
