@@ -1,6 +1,7 @@
 package io.meshspy.meshspy_server.node;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,9 +21,13 @@ public class ClientController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Node addClient(@RequestBody Node client) {
-        return nodeService.addClient(client);
+    public ResponseEntity<?> addClient(@RequestBody Node client) {
+        if (nodeService.isClientApproved(client.getId())) {
+            Node saved = nodeService.addClient(client);
+            return new ResponseEntity<>(saved, HttpStatus.CREATED);
+        }
+        nodeService.addClientRequestFromNode(client);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/reset")

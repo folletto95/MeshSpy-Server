@@ -74,6 +74,29 @@ La UI sarà accessibile su `http://localhost:5173` (in fase di sviluppo).
 docker-compose up -d
 ```
 
+## Esempio di implementazione del client
+
+I client approvati possono inviare periodicamente i propri dati al servizio admin. Di seguito un semplice esempio in Python:
+
+```python
+import requests
+
+client = {
+    "id": "USB01",
+    "name": "Client locale",
+    "client": True
+}
+
+resp = requests.post("http://localhost:8080/clients", json=client)
+if resp.status_code == 202:
+    print("In attesa di approvazione...")
+    exit()
+
+requests.post(f"http://localhost:8080/clients/{client['id']}/data", data="ciao")
+```
+
+Dopo l'approvazione, i dati inviati dal client possono essere recuperati con `GET /clients/{id}/data`.
+
 ## Contribuire
 
 Se desideri contribuire al progetto, sentiti libero di aprire issue, proporre modifiche o miglioramenti tramite pull request.
