@@ -35,6 +35,12 @@ body {
     text-decoration: underline;
 }
 
+.navbar .version {
+    margin-left: auto;
+    color: white;
+    font-size: 0.9em;
+}
+
 .container {
     max-width: 1000px;
     margin: 20px auto;
