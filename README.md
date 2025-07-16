@@ -6,7 +6,7 @@ MeshSpy is a project currently under development aimed at creating an advanced s
 
 ## Goals and Planned Features
 
-* **Centralized Management:** Administration and remote monitoring of Meshtastic nodes (similar to Ubiquiti UniFi style).
+* **Centralized Management:** Administration               and remote monitoring of Meshtastic nodes (similar to Ubiquiti UniFi style).
 * **Modern Graphical Interface:** Intuitive web UI based on React? with fast REST APIs built in Go.
 * **MQTT Integration:** Real-time communication between nodes and backend through MQTT broker.
 * **Multi-connectivity:** Support for USB, Bluetooth, and Wi-Fi connections for nodes.
