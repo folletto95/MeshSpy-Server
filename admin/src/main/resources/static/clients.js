@@ -4,27 +4,17 @@ let markers = [];
 async function loadClients() {
     const response = await fetch('clients');
     const clients = await response.json();
-    const pending = document.querySelector('#pending tbody');
     const online = document.querySelector('#online tbody');
     const offline = document.querySelector('#offline tbody');
-    pending.innerHTML = '';
     online.innerHTML = '';
     offline.innerHTML = '';
     markers.forEach(m => m.remove());
     markers = [];
     clients.forEach(c => {
         if (!c.name) return;
-        let target = online;
-        const status = c.status || (c.online ? 'online' : c.approved ? 'offline' : 'pending');
         const tr = document.createElement('tr');
-        if (status === 'pending') {
-            target = pending;
-            tr.innerHTML = `<td>${c.id}</td><td>${c.name}</td><td>${c.address ?? ''}</td>`;
-        } else {
-            if (status === 'offline') target = offline;
-            tr.innerHTML = `<td>${c.id}</td><td>${c.name}</td>`;
-        }
-        target.appendChild(tr);
+        tr.innerHTML = `<td>${c.id}</td><td>${c.name}</td>`;
+        online.appendChild(tr);
 
         if (c.latitude != null && c.longitude != null && map) {
             const count = c.nodeCount ?? c.nodes ?? c.connectedNodes ?? 0;
@@ -33,6 +23,35 @@ async function loadClients() {
             markers.push(marker);
         }
     });
+}
+
+async function loadRequests() {
+    const response = await fetch('client-requests');
+    const requests = await response.json();
+    const pending = document.querySelector('#pending tbody');
+    pending.innerHTML = '';
+    requests.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${r.id}</td><td>${r.name || r.longName || ''}</td><td>${r.address ?? ''}</td>` +
+            `<td><button data-id="${r.id}" class="approve">Approve</button> ` +
+            `<button data-id="${r.id}" class="reject">Reject</button></td>`;
+        pending.appendChild(tr);
+    });
+    document.querySelectorAll('.approve').forEach(btn => btn.addEventListener('click', approve));
+    document.querySelectorAll('.reject').forEach(btn => btn.addEventListener('click', reject));
+}
+
+async function approve(e) {
+    const id = e.target.dataset.id;
+    await fetch(`/client-requests/${id}/approve`, {method: 'POST'});
+    loadRequests();
+    loadClients();
+}
+
+async function reject(e) {
+    const id = e.target.dataset.id;
+    await fetch(`/client-requests/${id}`, {method: 'DELETE'});
+    loadRequests();
 }
 
 function initMap() {
@@ -57,5 +76,6 @@ async function resetDb() {
 document.addEventListener('DOMContentLoaded', () => {
     initMap();
     loadClients();
+    loadRequests();
     document.getElementById('reset-db').addEventListener('click', resetDb);
 });

@@ -74,6 +74,8 @@ La UI sarà accessibile su `http://localhost:5173` (in fase di sviluppo).
 docker-compose up -d
 ```
 
+Una volta avviato il servizio admin visita `http://localhost:8080` e nella pagina **Clients** potrai approvare o rifiutare le richieste dei client USB.
+
 ## Esempio di implementazione del client
 
 I client approvati possono inviare periodicamente i propri dati al servizio admin. Di seguito un semplice esempio in Python:
