@@ -65,7 +65,7 @@ docker compose up devel   # builds the JARs
 docker compose up debug-admin
 ```
 
-Once started, open `http://localhost:8080` to access simple pages showing the list of nodes or clients and an interactive map.
+Once started, open `http://localhost:8080` to access simple pages showing the list of nodes or clients and an interactive map. Pending USB client registrations are shown on the **Clients** page where they can be approved or rejected.
 
 The repository does not include Leaflet images to keep the history light. Run the helper script to download them locally before starting the admin module.  The script fetches the assets directly from GitHub:
 
